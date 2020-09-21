@@ -75,7 +75,7 @@ macro definitions
                         length of ip >= 2+sqrt(n)
                         strictly, 
                         length of ip >= 
-                            2+(1<<(int)(log(n+0.5)/log(2))/2).
+                            2+(1<<(int)(log(n+0.5f)/log(2))/2).
                         ip[0],ip[1] are pointers of the cos/sin table.
         w[0...n/2-1]   :cos/sin table (float *)
                         w[],ip[] are initialized if ip[0] == 0.
@@ -93,12 +93,12 @@ macro definitions
 -------- Real DFT / Inverse of Real DFT --------
     [definition]
         <case1> RDFT
-            R[k] = sum_j=0^n-1 a[j]*cos(2*pi*j*k/n), 0<=k<=n/2
-            I[k] = sum_j=0^n-1 a[j]*sin(2*pi*j*k/n), 0<k<n/2
+            R[k] = sum_j=0^n-1 a[j]*cosf(2*pi*j*k/n), 0<=k<=n/2
+            I[k] = sum_j=0^n-1 a[j]*sinf(2*pi*j*k/n), 0<k<n/2
         <case2> IRDFT (excluding scale)
-            a[k] = (R[0] + R[n/2]*cos(pi*k))/2 + 
-                   sum_j=1^n/2-1 R[j]*cos(2*pi*j*k/n) + 
-                   sum_j=1^n/2-1 I[j]*sin(2*pi*j*k/n), 0<=k<n
+            a[k] = (R[0] + R[n/2]*cosf(pi*k))/2 + 
+                   sum_j=1^n/2-1 R[j]*cosf(2*pi*j*k/n) + 
+                   sum_j=1^n/2-1 I[j]*sinf(2*pi*j*k/n), 0<=k<n
     [usage]
         <case1>
             ip[0] = 0; // first time only
@@ -124,7 +124,7 @@ macro definitions
                         length of ip >= 2+sqrt(n/2)
                         strictly, 
                         length of ip >= 
-                            2+(1<<(int)(log(n/2+0.5)/log(2))/2).
+                            2+(1<<(int)(log(n/2+0.5f)/log(2))/2).
                         ip[0],ip[1] are pointers of the cos/sin table.
         w[0...n/2-1]   :cos/sin table (float *)
                         w[],ip[] are initialized if ip[0] == 0.
@@ -142,9 +142,9 @@ macro definitions
 -------- DCT (Discrete Cosine Transform) / Inverse of DCT --------
     [definition]
         <case1> IDCT (excluding scale)
-            C[k] = sum_j=0^n-1 a[j]*cos(pi*j*(k+1/2)/n), 0<=k<n
+            C[k] = sum_j=0^n-1 a[j]*cosf(pi*j*(k+1/2)/n), 0<=k<n
         <case2> DCT
-            C[k] = sum_j=0^n-1 a[j]*cos(pi*(j+1/2)*k/n), 0<=k<n
+            C[k] = sum_j=0^n-1 a[j]*cosf(pi*(j+1/2)*k/n), 0<=k<n
     [usage]
         <case1>
             ip[0] = 0; // first time only
@@ -162,7 +162,7 @@ macro definitions
                         length of ip >= 2+sqrt(n/2)
                         strictly, 
                         length of ip >= 
-                            2+(1<<(int)(log(n/2+0.5)/log(2))/2).
+                            2+(1<<(int)(log(n/2+0.5f)/log(2))/2).
                         ip[0],ip[1] are pointers of the cos/sin table.
         w[0...n*5/4-1] :cos/sin table (float *)
                         w[],ip[] are initialized if ip[0] == 0.
@@ -170,7 +170,7 @@ macro definitions
         Inverse of 
             ddct(n, -1, a, ip, w);
         is 
-            a[0] *= 0.5;
+            a[0] *= 0.5f;
             ddct(n, 1, a, ip, w);
             for (j = 0; j <= n - 1; j++) {
                 a[j] *= 2.0 / n;
@@ -181,9 +181,9 @@ macro definitions
 -------- DST (Discrete Sine Transform) / Inverse of DST --------
     [definition]
         <case1> IDST (excluding scale)
-            S[k] = sum_j=1^n A[j]*sin(pi*j*(k+1/2)/n), 0<=k<n
+            S[k] = sum_j=1^n A[j]*sinf(pi*j*(k+1/2)/n), 0<=k<n
         <case2> DST
-            S[k] = sum_j=0^n-1 a[j]*sin(pi*(j+1/2)*k/n), 0<k<=n
+            S[k] = sum_j=0^n-1 a[j]*sinf(pi*(j+1/2)*k/n), 0<k<=n
     [usage]
         <case1>
             ip[0] = 0; // first time only
@@ -209,7 +209,7 @@ macro definitions
                         length of ip >= 2+sqrt(n/2)
                         strictly, 
                         length of ip >= 
-                            2+(1<<(int)(log(n/2+0.5)/log(2))/2).
+                            2+(1<<(int)(log(n/2+0.5f)/log(2))/2).
                         ip[0],ip[1] are pointers of the cos/sin table.
         w[0...n*5/4-1] :cos/sin table (float *)
                         w[],ip[] are initialized if ip[0] == 0.
@@ -217,7 +217,7 @@ macro definitions
         Inverse of 
             ddst(n, -1, a, ip, w);
         is 
-            a[0] *= 0.5;
+            a[0] *= 0.5f;
             ddst(n, 1, a, ip, w);
             for (j = 0; j <= n - 1; j++) {
                 a[j] *= 2.0 / n;
@@ -227,7 +227,7 @@ macro definitions
 
 -------- Cosine Transform of RDFT (Real Symmetric DFT) --------
     [definition]
-        C[k] = sum_j=0^n a[j]*cos(pi*j*k/n), 0<=k<=n
+        C[k] = sum_j=0^n a[j]*cosf(pi*j*k/n), 0<=k<=n
     [usage]
         ip[0] = 0; // first time only
         dfct(n, a, t, ip, w);
@@ -242,18 +242,18 @@ macro definitions
                         length of ip >= 2+sqrt(n/4)
                         strictly, 
                         length of ip >= 
-                            2+(1<<(int)(log(n/4+0.5)/log(2))/2).
+                            2+(1<<(int)(log(n/4+0.5f)/log(2))/2).
                         ip[0],ip[1] are pointers of the cos/sin table.
         w[0...n*5/8-1] :cos/sin table (float *)
                         w[],ip[] are initialized if ip[0] == 0.
     [remark]
         Inverse of 
-            a[0] *= 0.5;
-            a[n] *= 0.5;
+            a[0] *= 0.5f;
+            a[n] *= 0.5f;
             dfct(n, a, t, ip, w);
         is 
-            a[0] *= 0.5;
-            a[n] *= 0.5;
+            a[0] *= 0.5f;
+            a[n] *= 0.5f;
             dfct(n, a, t, ip, w);
             for (j = 0; j <= n; j++) {
                 a[j] *= 2.0 / n;
@@ -263,7 +263,7 @@ macro definitions
 
 -------- Sine Transform of RDFT (Real Anti-symmetric DFT) --------
     [definition]
-        S[k] = sum_j=1^n-1 a[j]*sin(pi*j*k/n), 0<k<n
+        S[k] = sum_j=1^n-1 a[j]*sinf(pi*j*k/n), 0<k<n
     [usage]
         ip[0] = 0; // first time only
         dfst(n, a, t, ip, w);
@@ -279,7 +279,7 @@ macro definitions
                         length of ip >= 2+sqrt(n/4)
                         strictly, 
                         length of ip >= 
-                            2+(1<<(int)(log(n/4+0.5)/log(2))/2).
+                            2+(1<<(int)(log(n/4+0.5f)/log(2))/2).
                         ip[0],ip[1] are pointers of the cos/sin table.
         w[0...n*5/8-1] :cos/sin table (float *)
                         w[],ip[] are initialized if ip[0] == 0.
@@ -330,22 +330,22 @@ static void makewt(int nw, int *ip, float *w)
     ip[1] = 1;
     if (nw > 2) {
         nwh = nw >> 1;
-        delta = atan(1.0) / nwh;
-        wn4r = cos(delta * nwh);
+        delta = atanf(1.0) / nwh;
+        wn4r = cosf(delta * nwh);
         w[0] = 1;
         w[1] = wn4r;
         if (nwh == 4) {
-            w[2] = cos(delta * 2);
-            w[3] = sin(delta * 2);
+            w[2] = cosf(delta * 2);
+            w[3] = sinf(delta * 2);
         } else if (nwh > 4) {
             makeipt(nw, ip);
-            w[2] = 0.5 / cos(delta * 2);
-            w[3] = 0.5 / cos(delta * 6);
+            w[2] = 0.5f / cosf(delta * 2);
+            w[3] = 0.5f / cosf(delta * 6);
             for (j = 4; j < nwh; j += 4) {
-                w[j] = cos(delta * j);
-                w[j + 1] = sin(delta * j);
-                w[j + 2] = cos(3 * delta * j);
-                w[j + 3] = -sin(3 * delta * j);
+                w[j] = cosf(delta * j);
+                w[j + 1] = sinf(delta * j);
+                w[j + 2] = cosf(3 * delta * j);
+                w[j + 3] = -sinf(3 * delta * j);
             }
         }
         nw0 = 0;
@@ -362,8 +362,8 @@ static void makewt(int nw, int *ip, float *w)
             } else if (nwh > 4) {
                 wk1r = w[nw0 + 4];
                 wk3r = w[nw0 + 6];
-                w[nw1 + 2] = 0.5 / wk1r;
-                w[nw1 + 3] = 0.5 / wk3r;
+                w[nw1 + 2] = 0.5f / wk1r;
+                w[nw1 + 3] = 0.5f / wk3r;
                 for (j = 4; j < nwh; j += 4) {
                     wk1r = w[nw0 + 2 * j];
                     wk1i = w[nw0 + 2 * j + 1];
@@ -389,12 +389,12 @@ static void makect(int nc, int *ip, float *c)
     ip[1] = nc;
     if (nc > 1) {
         nch = nc >> 1;
-        delta = atan(1.0) / nch;
-        c[0] = cos(delta * nch);
-        c[nch] = 0.5 * c[0];
+        delta = atanf(1.0) / nch;
+        c[0] = cosf(delta * nch);
+        c[nch] = 0.5f * c[0];
         for (j = 1; j < nch; j++) {
-            c[j] = 0.5 * cos(delta * j);
-            c[nc - j] = 0.5 * sin(delta * j);
+            c[j] = 0.5f * cosf(delta * j);
+            c[nc - j] = 0.5f * sinf(delta * j);
         }
     }
 }
@@ -2868,7 +2868,7 @@ static void rftfsub(int n, float *a, int nc, float *c)
     for (j = 2; j < m; j += 2) {
         k = n - j;
         kk += ks;
-        wkr = 0.5 - c[nc - kk];
+        wkr = 0.5f - c[nc - kk];
         wki = c[kk];
         xr = a[j] - a[k];
         xi = a[j + 1] + a[k + 1];
@@ -2893,7 +2893,7 @@ static void rftbsub(int n, float *a, int nc, float *c)
     for (j = 2; j < m; j += 2) {
         k = n - j;
         kk += ks;
-        wkr = 0.5 - c[nc - kk];
+        wkr = 0.5f - c[nc - kk];
         wki = c[kk];
         xr = a[j] - a[k];
         xi = a[j + 1] + a[k + 1];
@@ -2994,7 +2994,7 @@ void rdftf(int n, int isgn, float *a, int *ip, float *w)
         a[0] += a[1];
         a[1] = xi;
     } else {
-        a[1] = 0.5 * (a[0] - a[1]);
+        a[1] = 0.5f * (a[0] - a[1]);
         a[0] -= a[1];
         if (n > 4) {
             rftbsub(n, a, nc, w + nw);
