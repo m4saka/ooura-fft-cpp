@@ -1,5 +1,5 @@
-#ifndef FFTSG_H
-#define FFTSG_H
+#ifndef FFTSG_C_H
+#define FFTSG_C_H
 
 #ifdef __cplusplus
 namespace fftsg { extern "C" {
