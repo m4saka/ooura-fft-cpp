@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.1)
-project(fftsg LANGUAGES C CXX)
+project(fftsg LANGUAGES CXX)
 
 set(sources
-    src/fftsg.c
-    src/fftsg_float.c)
+    ${PROJECT_SOURCE_DIR}/src/fftsg.c
+    ${PROJECT_SOURCE_DIR}/src/fftsg_float.c)
+
+# C++用のオーバーロードをコンパイルするためにcファイルをC++のソースとして扱う
+set_source_files_properties(${sources} PROPERTIES LANGUAGE CXX)
 
 add_library(fftsg STATIC ${sources})
 

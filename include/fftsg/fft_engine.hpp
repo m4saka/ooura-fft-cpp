@@ -4,7 +4,7 @@
 #include <complex>
 #include <cmath>
 #include <cassert>
-#include "fftsg.h"
+#include "fftsg_c.h"
 
 namespace fftsg
 {
