@@ -42,7 +42,7 @@ namespace fftsg
         , m_ip(2 + static_cast<int>(sqrt(frameSize/4)))
         , m_w(frameSize / 2)
     {
-        m_ip[0] = static_cast<T>(0.0);
+        m_ip[0] = 0;
     }
 
     template <typename T>
