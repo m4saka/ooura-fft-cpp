@@ -28,9 +28,11 @@ namespace fftsg
         explicit RFFTEngine(int frameSize);
 
         // 高速フーリエ変換(実数部のみ)
+        void rfft(T *a);
         void rfft(std::vector<T> & a);
 
         // 逆高速フーリエ変換(実数部のみ)
+        void irfft(T *a);
         void irfft(std::vector<T> & a);
 
         int frameSize() const { return m_frameSize; }
@@ -46,10 +48,26 @@ namespace fftsg
     }
 
     template <typename T>
+    void RFFTEngine<T>::rfft(T *a)
+    {
+        rdft(m_frameSize, 1, a, &m_ip[0], &m_w[0]);
+    }
+
+    template <typename T>
     void RFFTEngine<T>::rfft(std::vector<T> & a)
     {
         assert(static_cast<int>(a.size()) == m_frameSize);
         rdft(m_frameSize, 1, &a[0], &m_ip[0], &m_w[0]);
+    }
+
+    template <typename T>
+    void RFFTEngine<T>::irfft(T *a)
+    {
+        rdft(m_frameSize, -1, a, &m_ip[0], &m_w[0]);
+        for (int i = 0; i < m_frameSize; ++i)
+        {
+            a[i] *= static_cast<T>(2.0) / m_frameSize;
+        }
     }
 
     template <typename T>

@@ -28,9 +28,11 @@ namespace fftsg
         explicit DCTEngine(int frameSize);
 
         // 離散コサイン変換
+        void dct(T *a);
         void dct(std::vector<T> & a);
 
         // 逆離散コサイン変換
+        void idct(T *a);
         void idct(std::vector<T> & a);
 
         int frameSize() const { return m_frameSize; }
@@ -46,10 +48,27 @@ namespace fftsg
     }
 
     template <typename T>
+    void DCTEngine<T>::dct(T *a)
+    {
+        ddct(m_frameSize, -1, a, &m_ip[0], &m_w[0]);
+    }
+
+    template <typename T>
     void DCTEngine<T>::dct(std::vector<T> & a)
     {
         assert(static_cast<int>(a.size()) == m_frameSize);
         ddct(m_frameSize, -1, &a[0], &m_ip[0], &m_w[0]);
+    }
+
+    template <typename T>
+    void DCTEngine<T>::idct(T *a)
+    {
+        a[0] *= 0.5;
+        ddct(m_frameSize, 1, a, &m_ip[0], &m_w[0]);
+        for (int i = 0; i < m_frameSize; ++i)
+        {
+            a[i] *= static_cast<T>(2.0) / m_frameSize;
+        }
     }
 
     template <typename T>
