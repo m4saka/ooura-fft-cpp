@@ -1,4 +1,49 @@
 # 大浦版FFT(一次元DFT/DCT) C++ラッパーライブラリ
+## 使用方法
+以下のヘッダをインクルードします。
+```cpp
+#include <fftsg/fftsg.hpp>
+```
+
+### 離散フーリエ変換: `FFTEngine`クラス
+```cpp
+// コンストラクタ: フレームサイズ(サンプル数)を指定。Nは2^nの値で指定すること。
+FFTEngine<float> fftEngine(N);
+
+// FFT
+fftEngine.fft(samples);
+
+// IFFT
+fftEngine.ifft(samples);
+```
+※ `samples` には `std::vector<std::complex<float>>`(要素数N) または `std::vector<float>`(実部と虚部を交互に並べたもの、要素数2N) を指定します
+
+### 離散フーリエ変換(実数バージョン): `RFFTEngine`クラス
+```cpp
+// コンストラクタ: フレームサイズ(サンプル数)を指定。Nは2^nの値で指定すること。
+RFFTEngine<float> rfftEngine(N);
+
+// FFT
+rfftEngine.rfft(samples);
+
+// IFFT
+rfftEngine.irfft(samples);
+```
+※ `samples` には `std::vector<float>`(実部のみ、要素数N) を指定します
+
+### 離散コサイン変換: `DCTEngine`クラス
+```cpp
+// コンストラクタ: フレームサイズ(サンプル数)を指定。Nは2^nの値で指定すること。
+DCTEngine<float> dctEngine(N);
+
+// DCT
+dctEngine.dct(samples);
+
+// IDCT
+dctEngine.idct(samples);
+```
+※ `samples` には `std::vector<float>`(実部のみ、要素数N) を指定します
+
 ## Cコードの改変部分
 `fftsg.c`のうち、以下の部分を改変しています。
 
@@ -12,10 +57,13 @@
 - 内部の計算に使用する関数は`static`を付けて内部リンケージにするように
     - そのままだとリンク時にdouble版とfloat版の関数名が衝突するため
     - それに伴って関数の宣言順などを変更
-    
+
+## 注意点
+- 離散サイン変換は個人的に利用する機会がなく動作テストできていないので除外しています
+
 ## ライセンス
 - このラッパーライブラリ自体のコードのライセンスは「Unlicense」です
-- ただし、`src/fftsg.c`および`src/fftsg_float.c`は大浦版FFTライセンスに準拠します
+- ただし、`src/fftsg.c`および`src/fftsg_float.c`は大浦版FFTのライセンスに準拠します
     - そのため、使用の際はラッパーライブラリ上でコードの修正が行われていることを必ず明記してください
 
 ## 大浦版FFTについて
