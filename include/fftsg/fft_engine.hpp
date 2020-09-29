@@ -84,7 +84,7 @@ namespace fftsg
     void FFTEngine<T>::ifft(T *a)
     {
         cdft(m_frameSize * 2, 1, a, &m_ip[0], &m_w[0]);
-        for (int i = 0; i < m_frameSize; ++i) {
+        for (int i = 0; i < m_frameSize * 2; ++i) {
             a[i] /= m_frameSize;
         }
     }
