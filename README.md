@@ -8,7 +8,7 @@
 ### 離散フーリエ変換: `FFTEngine`クラス
 ```cpp
 // コンストラクタ: フレームサイズ(サンプル数)を指定。Nは2^nの値で指定すること。
-FFTEngine<float> fftEngine(N);
+fftsg::FFTEngine<float> fftEngine(N);
 
 // FFT
 fftEngine.fft(samples);
@@ -21,7 +21,7 @@ fftEngine.ifft(samples);
 ### 離散フーリエ変換(実数バージョン): `RFFTEngine`クラス
 ```cpp
 // コンストラクタ: フレームサイズ(サンプル数)を指定。Nは2^nの値で指定すること。
-RFFTEngine<float> rfftEngine(N);
+fftsg::RFFTEngine<float> rfftEngine(N);
 
 // FFT
 rfftEngine.rfft(samples);
@@ -34,7 +34,7 @@ rfftEngine.irfft(samples);
 ### 離散コサイン変換: `DCTEngine`クラス
 ```cpp
 // コンストラクタ: フレームサイズ(サンプル数)を指定。Nは2^nの値で指定すること。
-DCTEngine<float> dctEngine(N);
+fftsg::DCTEngine<float> dctEngine(N);
 
 // DCT
 dctEngine.dct(samples);
