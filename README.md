@@ -5,6 +5,19 @@
 #include <fftsg/fftsg.hpp>
 ```
 
+各クラスは`float`型と`double`型に対応しています。
+```cpp
+// float型の場合
+fftsg::FFTEngine<float> fftEngine(N);
+fftsg::RFFTEngine<float> rfftEngine(N);
+fftsg::DCTEngine<float> dctEngine(N);
+
+// double型の場合
+fftsg::FFTEngine<double> fftEngine(N);
+fftsg::RFFTEngine<double> rfftEngine(N);
+fftsg::DCTEngine<double> dctEngine(N);
+```
+
 ### 離散フーリエ変換: `FFTEngine`クラス
 ```cpp
 // コンストラクタ: フレームサイズ(サンプル数)を指定。Nは2^nの値で指定すること。
