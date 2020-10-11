@@ -4,18 +4,49 @@
     - 大浦版FFTの関数ごとの呼び出しルール(初回のみ配列`ip`の最初の値に0を入れる、FFT/IFFTで`isgn`の符号を変える、など)もこのライブラリが請け負うので、開発時の余計な手間が省けます
 
 ## コンパイル方法
+### CMakeを使用したプロジェクトに使用する場合
+CMakeLists.txtに以下の記述を追加してください。  
+この例ではプロジェクト内にこのリポジトリを`third_party/fftsg`ディレクトリとして入れている場合を想定しています。
+```cmake
+add_subdirectory(third_party/fftsg)
+target_link_libraries(mfcc fftsg)
+```
+
+### CMake不使用のプロジェクトに使用する場合(Windows & Visual Studio)
+コマンドプロンプトを開き、このリポジトリのディレクトリに移動した上で以下を実行します。
+```
+> mkdir build
+> cd build
+> cmake ..
+> cmake --build . --config Debug
+> cmake --build . --config Release
+```
+これを実行すると`Debug/fftsg.lib`および`Release/fftsg.lib`が生成されます。
+
+Visual Studio上でプロジェクトのプロパティを開き、以下の2点を設定します。
+- 左上の構成を「すべての構成」に変更した上で以下を行います
+    - 「プロパティ」→「C/C++」→「全般」→「追加のインクルードディレクトリ」に、このリポジトリの`include`ディレクトリのパスを指定
+    - 「プロパティ」→「リンカー」→「入力」→「追加の依存ファイル」に、`fftsg.lib`という行を追加します
+- 左上の構成を「Debug」に変更した上で以下を行います
+    - 「プロパティ」→「リンカー」→「全般」→「追加のライブラリディレクトリ」に、このリポジトリの`build/Debug`ディレクトリのパスを指定
+- 左上の構成を「Release」に変更した上で以下を行います
+    - 「プロパティ」→「リンカー」→「全般」→「追加のライブラリディレクトリ」に、このリポジトリの`build/Release`ディレクトリのパスを指定
+
+なお、デフォルトでは64bit(x64)のアーキテクチャ向けにビルドされるため、プロジェクトで32bit(x86)用にビルドする必要がある場合は`cmake ..`の代わりに`cmake .. -A Win32`を実行してください。
+
+### CMake不使用のプロジェクトに使用する場合(Linux/Mac、Windows & MinGW or Cygwin)
 ```
 $ mkdir build
 $ cd build
 $ cmake ..
 $ cmake --build .
 ```
-Linux/Macの場合は`libfftsg.a`、Windows(Visual Studio)の場合は`Debug/fftsg.lib`が生成されます。  
-使用時にこれをリンクしてください。
+これを実行すると`libfftsg.a`が生成されるので、使用時にこれをリンクしてください。
 
-Windows(Visual Studio)の場合はターゲットがDebugビルドとなります。  
-Releaseビルドを実行するには`cmake --build . --config Release`を実行してください。  
-これを実行すると、`Release/fftsg.lib`が生成されます。
+GCC/Clangの場合、例えばこのリポジトリを`third_party/fftsg`ディレクトリとして入れている場合は以下のようにオプションを付ければインクルードおよびリンクできます。
+```
+$ g++ ～ -Ithird_party/fftsg/include -Lthird_party/fftsg/build -lfftsg
+```
 
 ## 使用方法
 以下のヘッダをインクルードします。
