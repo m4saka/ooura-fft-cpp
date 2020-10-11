@@ -41,6 +41,8 @@ $ cd build
 $ cmake ..
 $ cmake --build .
 ```
+(※MinGWを使用する場合は、`cmake ..`に`-G "MinGW Makefiles"`または`-G "MSYS Makefiles"`を環境に応じて指定してください)
+
 これを実行すると`libfftsg.a`が生成されるので、使用時にこれをリンクしてください。
 
 GCC/Clangの場合、例えばこのリポジトリを`third_party/fftsg`ディレクトリとして入れている場合は以下のようにオプションを付ければインクルードおよびリンクできます。
