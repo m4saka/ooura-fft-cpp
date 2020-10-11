@@ -63,11 +63,11 @@ dctEngine.idct(samples);
 
 ## コンパイル方法
 ### CMakeを使用したプロジェクトに使用する場合
-CMakeLists.txtに以下の記述を追加してください。  
+CMakeLists.txtに以下の記述を追加してください(`your_target`の部分はターゲット名に適宜変更)。  
 この例ではプロジェクト内にこのリポジトリを`third_party/fftsg`ディレクトリとして入れている場合を想定しています。
 ```cmake
 add_subdirectory(third_party/fftsg)
-target_link_libraries(mfcc fftsg)
+target_link_libraries(your_target fftsg)
 ```
 
 ### CMake不使用のプロジェクトに使用する場合(Windows & Visual Studio)
