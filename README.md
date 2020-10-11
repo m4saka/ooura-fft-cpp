@@ -3,6 +3,20 @@
     - ポインタ渡しや`std::vector`の参照渡し、`std::complex`の使用に対応しています
     - 大浦版FFTの関数ごとの呼び出しルール(初回のみ配列`ip`の最初の値に0を入れる、FFT/IFFTで`isgn`の符号を変える、など)もこのライブラリが請け負うので、開発時の余計な手間が省けます
 
+## コンパイル方法
+```
+$ mkdir build
+$ cd build
+$ cmake ..
+$ cmake --build .
+```
+Linux/Macの場合は`libfftsg.a`、Windows(Visual Studio)の場合は`Debug/fftsg.lib`が生成されます。  
+使用時にこれをリンクしてください。
+
+Windows(Visual Studio)の場合はターゲットがDebugビルドとなります。  
+Releaseビルドを実行するには`cmake --build . --config Release`を実行してください。  
+これを実行すると、`Release/fftsg.lib`が生成されます。
+
 ## 使用方法
 以下のヘッダをインクルードします。
 ```cpp
