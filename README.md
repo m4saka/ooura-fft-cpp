@@ -1,7 +1,7 @@
-# 大浦版FFT(一次元DFT/DCT)ライブラリ C++移植版
+# 大浦FFT(一次元DFT/DCT)ライブラリ C++移植版
 - [大浦氏の高速フーリエ変換ライブラリ](http://www.kurims.kyoto-u.ac.jp/~ooura/fft-j.html)をC++用に移植したものです
     - ポインタ渡しや`std::vector`の参照渡し、`std::complex`の使用に対応しています
-    - 大浦版FFTの関数ごとの呼び出しルール(初回のみ配列`ip`の最初の値に0を入れる、FFT/IFFTで`isgn`の符号を変える、など)もこのライブラリが請け負うので、開発時の余計な手間が省けます
+    - 大浦FFTの関数ごとの呼び出しルール(初回のみ配列`ip`の最初の値に0を入れる、FFT/IFFTで`isgn`の符号を変える、など)もこのライブラリが請け負うので、開発時の余計な手間が省けます
 
 ## 使用方法
 以下のヘッダをインクルードします。
@@ -132,15 +132,15 @@ $ g++ ～ -Ithird_party/fftsg/include -Lthird_party/fftsg/build -lfftsg
         - また、利用クラスの複数のインスタンスで同じ`FFTEngine`を使い回せるようにもなります
 
 ## ライセンス
-- `src/fftsg.c`および`src/fftsg_float.c`は大浦版FFTのライセンスに準拠します
-- 大浦版FFTから新たに追加されたファイル(`src/fftsg.c`と`src/fftsg_float.c`以外すべて)のライセンスは「Unlicense」です
+- `src/fftsg.c`および`src/fftsg_float.c`は大浦FFTのライセンスに準拠します
+- 大浦FFTから新たに追加されたファイル(`src/fftsg.c`と`src/fftsg_float.c`以外すべて)のライセンスは「Unlicense」です
 - すなわち、ご利用の際は以下の記載をしてください(コードの修正明記については、コード自体を再配布するのでなければ不要かも知れません)
     ```
     汎用 FFT (高速 フーリエ/コサイン/サイン 変換) パッケージ (※一部コードを修正して使用)
     Copyright Takuya OOURA, 1996-2001
     ```
 
-## 大浦版FFTについて
+## 大浦FFTについて
 ### 配布ページ
 - http://www.kurims.kyoto-u.ac.jp/~ooura/fft-j.html
 
