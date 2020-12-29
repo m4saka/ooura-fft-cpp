@@ -132,13 +132,8 @@ $ g++ ～ -Ithird_party/fftsg/include -Lthird_party/fftsg/build -lfftsg
         - また、利用クラスの複数のインスタンスで同じ`FFTEngine`を使い回せるようにもなります
 
 ## ライセンス
-- `src/fftsg.c`および`src/fftsg_float.c`は大浦FFTのライセンスに準拠します
-- 大浦FFTから新たに追加されたファイル(`src/fftsg.c`と`src/fftsg_float.c`以外すべて)のライセンスは「Unlicense」です
-- すなわち、ご利用の際は以下の記載をしてください(コードの修正明記については、コード自体を再配布するのでなければ不要かも知れません)
-    ```
-    汎用 FFT (高速 フーリエ/コサイン/サイン 変換) パッケージ (※一部コードを修正して使用)
-    Copyright Takuya OOURA, 1996-2001
-    ```
+- `src/fftsg.c`および`src/fftsg_float.c`は大浦FFTライブラリのライセンス準拠、それら以外の追加ファイル(cpp, hppファイルなど)のライセンスは「Unlicense」です
+- すなわち、本ライブラリをご利用の際は大浦FFTライブラリのライセンスに従ってください
 
 ## 大浦FFTについて
 ### 配布ページ
